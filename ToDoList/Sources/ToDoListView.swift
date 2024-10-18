@@ -12,11 +12,21 @@ struct ToDoListView: View {
     var body: some View {
         NavigationView {
             VStack {
-                // Filter selector
-                // TODO: - Add a filter selector which will call the viewModel for updating the displayed data
-                // List of tasks
+                Text("To-Do List")
+                    .font(.title)
+                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                // Picker with all the status values to apply filter in the list below
+                Picker("", selection: $viewModel.status) {
+                    ForEach(Status.allCases, id: \.self) { status in
+                        Text(status.rawValue)
+                            .tag(status as Status?)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(20)
+                // List of tasks filtered
                 List {
-                    ForEach(viewModel.toDoItems) { item in
+                    ForEach(viewModel.filteredItems) { item in
                         HStack {
                             Button(action: {
                                 viewModel.toggleTodoItemCompletion(item)
@@ -82,14 +92,13 @@ struct ToDoListView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(isAddingTodo ? .red : Color.blue)
                         .cornerRadius(10)
                         .shadow(radius: 5)
                 }
                 .padding()
 
             }
-            .navigationBarTitle("To-Do List")
             .navigationBarItems(trailing: EditButton())
         }
     }

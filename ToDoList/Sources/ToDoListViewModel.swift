@@ -20,7 +20,14 @@ final class ToDoListViewModel: ObservableObject {
             repository.saveToDoItems(toDoItems)
         }
     }
-
+    // Published var to select the status of completion, natively return all
+    @Published var status: Status = .all
+    
+    // Computed Propriety to filter toDoItems without removing anything
+      var filteredItems: [ToDoItem] {
+        return applyFilter(is: status)
+      }
+    
     // MARK: - Inputs
 
     // Add a new to-do item with priority and category
@@ -41,7 +48,18 @@ final class ToDoListViewModel: ObservableObject {
     }
 
     /// Apply the filter to update the list.
-    func applyFilter(at index: Int) {
+    ///
+    /// Index 1 to filter isDone true
+    /// index 2 to filter isDone false
+    func applyFilter(is status: Status) -> [ToDoItem] {
         // TODO: - Implement the logic for filtering
+        switch status {
+        case .all :
+            return toDoItems
+        case .done :
+            return toDoItems.filter{ $0.isDone }
+        case .undone :
+            return toDoItems.filter{ !$0.isDone }
+        }
     }
 }
