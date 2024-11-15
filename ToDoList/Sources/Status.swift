@@ -9,7 +9,7 @@ import Foundation
 
 // Enum to handle all completion Cases
 enum Status: String, CaseIterable {
-    case all = "All"
-    case done = "Done"
-    case undone = "Undone"
+    case all = "Tout"
+    case done = "Fait"
+    case undone = "À Faire"
 }

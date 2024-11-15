@@ -47,6 +47,7 @@
 		2F938E8E2AC580DF00E828F4 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		685801D92CC279B900B3190C /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		685801DB2CC28AB000B3190C /* Priorities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priorities.swift; sourceTree = "<group>"; };
+		687793652CCB8BA200C97E39 /* ToDoList.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = ToDoList.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +112,7 @@
 		2F90C7D42AC357C6005D888A = {
 			isa = PBXGroup;
 			children = (
+				687793652CCB8BA200C97E39 /* ToDoList.xctestplan */,
 				2F938E8E2AC580DF00E828F4 /* Readme.md */,
 				2F90C7DF2AC357C6005D888A /* ToDoList */,
 				2F5B3B722AC430FA0033E479 /* ToDoListTests */,
@@ -203,11 +205,12 @@
 			};
 			buildConfigurationList = 2F90C7D82AC357C6005D888A /* Build configuration list for PBXProject "ToDoList" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = fr;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 2F90C7D42AC357C6005D888A;
 			productRefGroup = 2F90C7DE2AC357C6005D888A /* Products */;

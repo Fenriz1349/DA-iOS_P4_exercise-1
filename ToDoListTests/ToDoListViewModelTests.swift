@@ -3,85 +3,92 @@ import Combine
 @testable import ToDoList
 
 final class ToDoListViewModelTests: XCTestCase {
-    // MARK: - Properties
-    
-    private var viewModel: ToDoListViewModel!
-    private var repository: MockToDoListRepository!
-    
-    // MARK: - Setup
-    
-    override func setUp() {
-        super.setUp()
-        repository = MockToDoListRepository()
-        viewModel = ToDoListViewModel(repository: repository)
-    }
-    
-    // MARK: - Tear Down
-    
-    override func tearDown() {
-        viewModel = nil
-        repository = nil
-        super.tearDown()
-    }
     
     // MARK: - Tests
+    func testVariables_initialisationUponCreation_defaultCorrectValues() {
+        // Given
+        let repository = MockToDoListRepository()
+        print("Mock ToDo Items count: \(repository.mockToDoItems.count)")  // Devrait afficher 3
+            
+            let sut = ToDoListViewModel(repository: repository)
+            
+            // Vérifie que toDoItems dans le ViewModel est bien initialisé à partir du mock
+            print("SUT ToDo Items count: \(sut.toDoItems.count)")
+        
+        // Then
+        XCTAssertEqual(sut.toDoItems.count, 3)
+        XCTAssertTrue(sut.toDoItems[0].title == "Faire une todo list")
+        XCTAssertTrue(sut.toDoItems[0].priority == .low)
+        XCTAssertTrue(sut.toDoItems[0].isDone)
+        XCTAssertTrue(sut.toDoItems[1].title == "Faire les courses")
+        XCTAssertTrue(sut.toDoItems[1].priority == .medium)
+        XCTAssertFalse(sut.toDoItems[1].isDone)
+        XCTAssertTrue(sut.toDoItems[2].title == "Conquerir le monde")
+        XCTAssertTrue(sut.toDoItems[2].priority == .high)
+        XCTAssertFalse(sut.toDoItems[2].isDone)
+    }
     
     func testAddTodoItem() {
         // Given
-        let item = ToDoItem(title: "Test Task")
+        let repository = MockToDoListRepository()
+        let sut = ToDoListViewModel(repository: repository)
+        let item = ToDoItem(title: "Test Task", priority: .low)
         
         // When
-        viewModel.add(item: item)
+        sut.add(item: item)
         
         // Then
-        XCTAssertEqual(viewModel.toDoItems.count, 1)
-        XCTAssertTrue(viewModel.toDoItems[0].title == "Test Task")
+        XCTAssertEqual(sut.toDoItems.count, 4)
+        XCTAssertTrue(sut.toDoItems[3].title == "Test Task")
+        XCTAssertTrue(sut.toDoItems[3].priority == .low)
     }
     
     func testToggleTodoItemCompletion() {
         // Given
-        let item = ToDoItem(title: "Test Task")
-        viewModel.add(item: item)
+        let repository = MockToDoListRepository()
+        let sut = ToDoListViewModel(repository: repository)
+        let item = ToDoItem(title: "Test Task", priority: .low)
+        sut.add(item: item)
         
         // When
-        viewModel.toggleTodoItemCompletion(item)
+        sut.toggleTodoItemCompletion(item)
         
         // Then
-        XCTAssertTrue(viewModel.toDoItems[0].isDone)
+        XCTAssertTrue(sut.toDoItems[0].isDone)
     }
     
     func testRemoveTodoItem() {
         // Given
-        let item = ToDoItem(title: "Test Task")
-        viewModel.toDoItems.append(item)
+        let repository = MockToDoListRepository()
+        let sut = ToDoListViewModel(repository: repository)
+        let item = ToDoItem(title: "Test Task", priority: .low)
+        sut.toDoItems.append(item)
         
         // When
-        viewModel.removeTodoItem(item)
+        sut.removeTodoItem(item)
         
         // Then
-        XCTAssertTrue(viewModel.toDoItems.isEmpty)
+        XCTAssertEqual(sut.toDoItems.count, 3)
     }
     
     func testFilteredToDoItems() {
         // Given
-        let item1 = ToDoItem(title: "Task 1", isDone: true)
-        let item2 = ToDoItem(title: "Task 2", isDone: false)
-        viewModel.add(item: item1)
-        viewModel.add(item: item2)
+        let repository = MockToDoListRepository()
+        let sut = ToDoListViewModel(repository: repository)
         
         // When
-        viewModel.status = .all
+        sut.status = .all
         // Then
-        XCTAssertEqual(viewModel.filteredItems.count, 2)
+        XCTAssertEqual(sut.filteredItems.count, 3)
         
         // When
-        viewModel.status = .done
+        sut.status = .done
         // Then
-        XCTAssertEqual(viewModel.filteredItems.count, 1)
+        XCTAssertEqual(sut.filteredItems.count, 1)
         
         // When
-        viewModel.status = .undone
+        sut.status = .undone
         // Then
-        XCTAssertEqual(viewModel.filteredItems.count, 1)
+        XCTAssertEqual(sut.filteredItems.count, 2)
     }
 }

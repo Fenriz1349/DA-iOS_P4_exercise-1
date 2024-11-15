@@ -5,10 +5,18 @@
 //  Created by Julien Cotte on 18/10/2024.
 //
 
-import Foundation
+import SwiftUI
 
-enum Priorities: String, CaseIterable {
-    case low = "Low"
+enum Priorities: String, CaseIterable, Codable {
+    case low = "Faible"
     case medium = "Medium"
-    case High = "High"
+    case high = "Haute"
+    
+    var color: Color {
+        switch self {
+        case .low : return .green
+        case .medium : return .yellow
+        case .high: return .red
+        }
+    }
 }

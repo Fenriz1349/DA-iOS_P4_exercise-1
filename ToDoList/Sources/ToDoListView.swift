@@ -5,6 +5,7 @@ struct ToDoListView: View {
     @State private var newTodoTitle = ""
     @State private var isShowingAlert = false
     @State private var isAddingTodo = false
+    @State private var newPriority : Priorities = .low
     
     // New state for filter index
     @State private var filterIndex = 0
@@ -24,7 +25,7 @@ struct ToDoListView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding(20)
-                // List of tasks filtered
+                // Liste des tâches filtrées
                 List {
                     ForEach(viewModel.filteredItems) { item in
                         HStack {
@@ -40,6 +41,10 @@ struct ToDoListView: View {
                                 .font(item.isDone ? .subheadline : .body)
                                 .strikethrough(item.isDone)
                                 .foregroundColor(item.isDone ? .gray : .primary)
+                            Text(item.priority.rawValue)
+                                .font(item.isDone ? .subheadline : .body)
+                                .strikethrough(item.isDone)
+                                .foregroundColor(item.priority.color)
                         }
                     }
                     .onDelete { indices in
@@ -53,9 +58,16 @@ struct ToDoListView: View {
                 // Sticky bottom view for adding todos
                 if isAddingTodo {
                     HStack {
-                        TextField("Enter Task Title", text: $newTodoTitle)
-                            .padding(.leading)
-
+                        VStack {
+                            TextField("Entrer une tâche", text: $newTodoTitle)
+                                .padding(.leading)
+                            Picker(selection: $newPriority, label: Text("Priorité")) {
+                                ForEach(Priorities.allCases, id: \.self) {priority in
+                                    Text(priority.rawValue)
+                                    .tag(priority as Priorities?)}
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                        }
                         Spacer()
                         
                         Button(action: {
@@ -64,7 +76,8 @@ struct ToDoListView: View {
                             } else {
                                 viewModel.add(
                                     item: .init(
-                                        title: newTodoTitle
+                                        title: newTodoTitle,
+                                        priority: newPriority
                                     )
                                 )
                                 newTodoTitle = "" // Reset newTodoTitle to empty.
@@ -87,7 +100,7 @@ struct ToDoListView: View {
                 Button(action: {
                     isAddingTodo.toggle()
                 }) {
-                    Text(isAddingTodo ? "Close" : "Add Task")
+                    Text(isAddingTodo ? "Fermer" : "Ajouter Tâche")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
