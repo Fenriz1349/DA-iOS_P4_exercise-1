@@ -21,7 +21,14 @@ final class ToDoListViewModel: ObservableObject {
     
     // Liste pour gérer l'affichage filtré
     var filteredItems: [ToDoItem] {
-        return applyFilter(is: status)
+        switch status {
+        case .all :
+            return toDoItems
+        case .done :
+            return toDoItems.filter{ $0.isDone }
+        case .undone :
+            return toDoItems.filter{ !$0.isDone }
+        }
     }
 
     // MARK: - Inputs
@@ -38,16 +45,5 @@ final class ToDoListViewModel: ObservableObject {
 
     func removeTodoItem(_ item: ToDoItem) {
         toDoItems.removeAll { $0.id == item.id }
-    }
-
-    func applyFilter(is status: Status) -> [ToDoItem] {
-        switch status {
-        case .all :
-            return toDoItems
-        case .done :
-            return toDoItems.filter{ $0.isDone }
-        case .undone :
-            return toDoItems.filter{ !$0.isDone }
-        }
     }
 }
