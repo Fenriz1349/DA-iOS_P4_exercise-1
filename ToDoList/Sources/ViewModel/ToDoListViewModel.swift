@@ -7,7 +7,6 @@ final class ToDoListViewModel: ObservableObject {
     init(repository: ToDoListRepositoryType) {
         self.repository = repository
         self.toDoItems = repository.loadToDoItems()
-        print(self.toDoItems.count)
     }
 
     // MARK: - Outputs
