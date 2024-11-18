@@ -8,13 +8,8 @@ final class ToDoListViewModelTests: XCTestCase {
     func testVariables_initialisationUponCreation_defaultCorrectValues() {
         // Given
         let repository = MockToDoListRepository()
-        print("Mock ToDo Items count: \(repository.mockToDoItems.count)")  // Devrait afficher 3
+        let sut = ToDoListViewModel(repository: repository)
             
-            let sut = ToDoListViewModel(repository: repository)
-            
-            // Vérifie que toDoItems dans le ViewModel est bien initialisé à partir du mock
-            print("SUT ToDo Items count: \(sut.toDoItems.count)")
-        
         // Then
         XCTAssertEqual(sut.toDoItems.count, 3)
         XCTAssertTrue(sut.toDoItems[0].title == "Faire une todo list")
