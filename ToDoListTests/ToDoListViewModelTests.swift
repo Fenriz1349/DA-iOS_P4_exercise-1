@@ -71,7 +71,7 @@ final class ToDoListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.toDoItems.count, 3)
     }
     
-    func testFilteredToDoItems() {
+    func testFilteredToDoItems_all() {
         // Given
         let repository = MockToDoListRepository()
         let sut = ToDoListViewModel(repository: repository)
@@ -80,12 +80,22 @@ final class ToDoListViewModelTests: XCTestCase {
         sut.status = .all
         // Then
         XCTAssertEqual(sut.filteredItems.count, 3)
-        
+    }
+    
+    func testFilteredToDoItems_done() {
+        // Given
+        let repository = MockToDoListRepository()
+        let sut = ToDoListViewModel(repository: repository)
         // When
         sut.status = .done
         // Then
         XCTAssertEqual(sut.filteredItems.count, 1)
-        
+    }
+    
+    func testFilteredToDoItems_undone() {
+        // Given
+        let repository = MockToDoListRepository()
+        let sut = ToDoListViewModel(repository: repository)
         // When
         sut.status = .undone
         // Then
