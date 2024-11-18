@@ -1,12 +1,9 @@
 import SwiftUI
 
 final class ToDoListViewModel: ObservableObject {
-    // MARK: - Private properties
 
     private let repository: ToDoListRepositoryType
     
-    // MARK: - Init
-
     init(repository: ToDoListRepositoryType) {
         self.repository = repository
         self.toDoItems = repository.loadToDoItems()
@@ -23,6 +20,7 @@ final class ToDoListViewModel: ObservableObject {
 
     @Published var status: Status = .all
     
+    // Liste pour gérer l'affichage filtré
     var filteredItems: [ToDoItem] {
         return applyFilter(is: status)
     }

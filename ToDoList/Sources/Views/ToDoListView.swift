@@ -55,7 +55,7 @@ struct ToDoListView: View {
                     }
                 }
                 
-                // Sticky bottom view for adding todos
+                // bouton pour afficher ajouter une tache
                 if isAddingTodo {
                     HStack {
                         VStack {
@@ -96,7 +96,7 @@ struct ToDoListView: View {
                     .padding(.horizontal)
                 }
                 
-                // Button to toggle the bottom add view
+                // Bouton pour switch entre l'ajout d'une tache ou fermer l'ajout.
                 Button(action: {
                     isAddingTodo.toggle()
                 }) {

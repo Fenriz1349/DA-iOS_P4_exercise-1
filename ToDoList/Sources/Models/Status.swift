@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Enum to handle all completion Cases
+// Enum pour gérer tous les cas de complétions et les filtrer.
 enum Status: String, CaseIterable {
     case all = "Tout"
     case done = "Fait"

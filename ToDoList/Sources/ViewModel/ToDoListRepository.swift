@@ -7,6 +7,7 @@ protocol ToDoListRepositoryType {
 
 final class ToDoListRepository: ToDoListRepositoryType {
     private let fileURL: URL
+    // liste de taches en cas de fichier vide 
     private let sampleToDoItems: [ToDoItem] = [
         ToDoItem(title: "Faire une todo list", isDone: true, priority: .low),
         ToDoItem(title: "Faire les courses", priority: .medium),
@@ -25,7 +26,7 @@ final class ToDoListRepository: ToDoListRepositoryType {
         }
     }
     
-    // Load to-do items from the JSON file
+    // Charge les item depuis le fichier JSON, en cas de fichier vide ou non existant renvoir une liste pour le test
     func loadToDoItems() -> [ToDoItem] {
         do {
             let data = try Data(contentsOf: fileURL)
@@ -37,7 +38,7 @@ final class ToDoListRepository: ToDoListRepositoryType {
         }
     }
     
-    // Save to-do items to the JSON file
+    // Sauvegarde les taches dans un JSON
     func saveToDoItems(_ toDoItems: [ToDoItem]) {
         do {
             let encoder = JSONEncoder()
